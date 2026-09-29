@@ -21,7 +21,7 @@ function verifierParticipation(data) {
   lock.waitLock(15000);
 
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = SpreadsheetApp.openById("1uhy1rofYVpc7GXrMX6A-frFv_ry0svahJE89WELgNmQ");
     let sheet = ss.getSheetByName("Clients");
 
     if (!sheet) {
