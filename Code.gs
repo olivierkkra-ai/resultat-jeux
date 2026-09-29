@@ -1,7 +1,14 @@
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Index')
-    .setTitle('Jeu Concours - Ivoirshop')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+function doPost(e) {
+  let data;
+  try {
+    data = JSON.parse(e.postData.contents);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({error: "Invalid JSON"})).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  const resultat = verifierParticipation(data);
+  return ContentService.createTextOutput(JSON.stringify(resultat))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // Nettoie le texte : supprime accents, espaces et minuscules pour une comparaison fiable

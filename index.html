@@ -150,7 +150,10 @@
 </div>
 
 <script>
-    function verifier(event) {
+    // ⚠️ IMPORTANT : Remplacer l'URL ci-dessous par l'URL de votre application Web Google Apps Script !
+    const GOOGLE_SCRIPT_URL = "VOTRE_LIEN_GOOGLE_APPS_SCRIPT_ICI";
+
+    async function verifier(event) {
         event.preventDefault();
 
         const btn = document.getElementById('btn-submit');
@@ -162,14 +165,29 @@
             telephone: document.getElementById('telephone').value
         };
 
-        google.script.run
-            .withSuccessHandler(afficherReponse)
-            .withFailureHandler(function(err) {
-                alert("Erreur de connexion. Veuillez réessayer.");
-                btn.disabled = false;
-                btn.innerText = "Vérifier mon statut";
-            })
-            .verifierParticipation(payload);
+        if (GOOGLE_SCRIPT_URL === "VOTRE_LIEN_GOOGLE_APPS_SCRIPT_ICI") {
+            alert("Veuillez configurer l'URL de Google Apps Script dans le code (ligne 116).");
+            btn.disabled = false;
+            btn.innerText = "Vérifier mon statut";
+            return;
+        }
+
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                // On utilise text/plain pour éviter les erreurs CORS de pré-vérification
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            
+            const res = await response.json();
+            afficherReponse(res);
+        } catch (err) {
+            console.error(err);
+            alert("Erreur de connexion avec le serveur. Veuillez réessayer.");
+            btn.disabled = false;
+            btn.innerText = "Vérifier mon statut";
+        }
     }
 
     function afficherReponse(res) {
