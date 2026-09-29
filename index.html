@@ -48,13 +48,19 @@
             z-index: 1;
         }
 
-        /* L'image en haut de la carte */
-        .header-image {
-            width: 100px;
-            height: auto;
-            margin-top: -60px; /* Fait déborder l'image vers le haut pour un effet 3D */
-            margin-bottom: 15px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        /* L'image ou icône en haut de la carte */
+        .header-icon {
+            font-size: 45px;
+            background: white;
+            width: 85px;
+            height: 85px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: -70px auto 15px auto; /* Fait déborder vers le haut */
+            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.4);
+            border: 3px solid #ff6600;
         }
 
         h1 {
@@ -180,8 +186,8 @@
 
 <div class="container">
     <div id="form-section">
-        <!-- Image de cadeau en 3D qui dépasse en haut -->
-        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/gift-box-4993447-4159595.png" alt="Cadeau" class="header-image">
+        <!-- Icône de cadeau qui remplace l'image cassée -->
+        <div class="header-icon">🎁</div>
         <h1>Résultats du Concours</h1>
         <p class="subtitle">Découvrez si vous avez gagné un lot !</p>
         
