@@ -1,12 +1,13 @@
-function doPost(e) {
-  let data;
-  try {
-    data = JSON.parse(e.postData.contents);
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({error: "Invalid JSON"})).setMimeType(ContentService.MimeType.JSON);
-  }
+function doGet(e) {
+  // Récupérer les paramètres de l'URL (GET)
+  let data = {
+    nom: e.parameter.nom || "",
+    telephone: e.parameter.telephone || ""
+  };
   
   const resultat = verifierParticipation(data);
+  
+  // Ajouter les en-têtes CORS pour Vercel
   return ContentService.createTextOutput(JSON.stringify(resultat))
     .setMimeType(ContentService.MimeType.JSON);
 }
