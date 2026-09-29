@@ -6,9 +6,15 @@ function doGet(e) {
   };
   
   const resultat = verifierParticipation(data);
+  const jsonString = JSON.stringify(resultat);
   
-  // Ajouter les en-têtes CORS pour Vercel
-  return ContentService.createTextOutput(JSON.stringify(resultat))
+  // Support JSONP (Contournement universel des blocages CORS)
+  if (e.parameter.callback) {
+    return ContentService.createTextOutput(e.parameter.callback + '(' + jsonString + ');')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  
+  return ContentService.createTextOutput(jsonString)
     .setMimeType(ContentService.MimeType.JSON);
 }
 

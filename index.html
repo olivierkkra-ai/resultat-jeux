@@ -173,21 +173,32 @@
         }
 
         try {
-            // Utiliser une requête GET pour éviter les problèmes CORS et de redirection (302) des navigateurs
+            // Utiliser JSONP pour contourner à 100% les problèmes CORS
             const url = new URL(GOOGLE_SCRIPT_URL);
             url.searchParams.append('nom', payload.nom);
             url.searchParams.append('telephone', payload.telephone);
-
-            const response = await fetch(url.toString(), {
-                method: 'GET',
-                mode: 'cors'
-            });
             
-            const res = await response.json();
-            afficherReponse(res);
+            // Créer une fonction de rappel unique
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+            url.searchParams.append('callback', callbackName);
+            
+            window[callbackName] = function(res) {
+                afficherReponse(res);
+                delete window[callbackName]; // Nettoyer après usage
+            };
+            
+            const script = document.createElement('script');
+            script.src = url.toString();
+            script.onerror = function() {
+                alert("Erreur de connexion avec le serveur. Veuillez réessayer.");
+                btn.disabled = false;
+                btn.innerText = "Vérifier mon statut";
+            };
+            document.body.appendChild(script);
+            
         } catch (err) {
             console.error(err);
-            alert("Erreur de connexion avec le serveur. Veuillez réessayer.");
+            alert("Erreur de préparation de la requête.");
             btn.disabled = false;
             btn.innerText = "Vérifier mon statut";
         }
