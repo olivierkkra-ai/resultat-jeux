@@ -7,6 +7,8 @@
     <title>Jeu Concours - Ivoirshop</title>
     <!-- Ajout de la police Google Fonts (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Ajout de la police Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -15,8 +17,10 @@
         }
 
         body {
-            /* Arrière-plan festif et moderne (dégradé) */
-            background: linear-gradient(135deg, #ff9a44 0%, #fc6076 100%);
+            /* Arrière-plan festif avec une image pour donner de la profondeur */
+            background: linear-gradient(rgba(255, 154, 68, 0.8), rgba(252, 96, 118, 0.8)), 
+                        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
             padding: 20px 15px;
             min-height: 100vh;
@@ -25,57 +29,58 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow-x: hidden;
         }
-
-        /* Petits effets décoratifs en arrière-plan */
-        body::before, body::after {
-            content: '';
-            position: absolute;
-            width: 250px;
-            height: 250px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            z-index: 0;
-            filter: blur(30px);
-        }
-        body::before { top: -50px; left: -50px; }
-        body::after { bottom: -50px; right: -50px; }
 
         .container {
-            /* Effet Glassmorphism (verre) */
-            background: rgba(255, 255, 255, 0.90);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 30px 25px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            /* Effet Glassmorphism (verre) beaucoup plus visible avec une image de fond */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             margin: auto;
             position: relative;
             z-index: 1;
         }
 
+        /* L'image en haut de la carte */
+        .header-image {
+            width: 100px;
+            height: auto;
+            margin-top: -60px; /* Fait déborder l'image vers le haut pour un effet 3D */
+            margin-bottom: 15px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+
         h1 {
-            color: #ff6600;
+            color: #ff5e00;
             margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 24px;
+            font-weight: 800;
             line-height: 1.3;
+        }
+        
+        .subtitle {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 25px;
         }
 
         input {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             margin-bottom: 15px;
-            border: 1px solid #e1e1e1;
+            border: 2px solid transparent;
             border-radius: 12px;
             font-size: 15px;
-            background-color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
             outline: none;
             transition: all 0.3s ease;
             -webkit-appearance: none;
@@ -84,32 +89,33 @@
         input:focus {
             border-color: #ff6600;
             background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.1);
+            box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.15), inset 0 2px 5px rgba(0,0,0,0.02);
         }
 
         button {
             width: 100%;
-            /* Dégradé sur le bouton */
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            background: linear-gradient(135deg, #ff7e5f, #ff4e00);
             color: white;
             border: none;
-            padding: 16px;
+            padding: 18px;
             font-size: 16px;
             font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             -webkit-appearance: none;
-            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 94, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 94, 0, 0.5);
         }
 
         button:active {
-            transform: scale(0.97);
+            transform: scale(0.96);
         }
 
         button:disabled {
@@ -125,26 +131,26 @@
             animation: fadeIn 0.4s ease-out;
         }
 
-        .felicitations { color: #27ae60; font-size: 22px; font-weight: 700; }
-        .perdu { color: #e74c3c; font-size: 22px; font-weight: 700; }
-        .non-inscrit { color: #d35400; font-size: 20px; font-weight: 700; }
+        .felicitations { color: #27ae60; font-size: 24px; font-weight: 800; }
+        .perdu { color: #e74c3c; font-size: 24px; font-weight: 800; }
+        .non-inscrit { color: #d35400; font-size: 22px; font-weight: 800; }
 
         .product-img {
             width: 100%;
-            max-width: 240px;
+            max-width: 250px;
             height: auto;
-            max-height: 200px;
+            max-height: 220px;
             object-fit: contain;
-            margin: 15px auto;
+            margin: 20px auto;
             border-radius: 12px;
             display: block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
         }
 
         .btn-action {
             display: block;
             margin-top: 15px;
-            padding: 14px;
+            padding: 16px;
             color: white;
             background: #ff6600;
             text-decoration: none;
@@ -152,7 +158,8 @@
             font-size: 15px;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(255, 102, 0, 0.3);
+            text-transform: uppercase;
         }
 
         .btn-secondary {
@@ -160,11 +167,11 @@
             box-shadow: 0 4px 10px rgba(149, 165, 166, 0.3);
             margin-top: 15px;
             font-size: 14px;
-            padding: 12px;
+            padding: 14px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            from { opacity: 0; transform: translateY(15px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
     </style>
@@ -173,7 +180,11 @@
 
 <div class="container">
     <div id="form-section">
-        <h1>🎁 Consultez votre résultat</h1>
+        <!-- Image de cadeau en 3D qui dépasse en haut -->
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/gift-box-4993447-4159595.png" alt="Cadeau" class="header-image">
+        <h1>Résultats du Concours</h1>
+        <p class="subtitle">Découvrez si vous avez gagné un lot !</p>
+        
         <form id="gameForm" onsubmit="verifier(event)">
             <input type="text" id="nom" placeholder="Votre Nom complet" required autocomplete="name">
             <input type="tel" id="telephone" placeholder="Votre Numéro de téléphone" required autocomplete="tel">
